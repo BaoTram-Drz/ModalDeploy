@@ -12,6 +12,7 @@ subprocess.call(['pip', 'install', 'tensorflow==2.7.0'])
 from model import create_model
 import streamlit as st
 import numpy as np
+from tensorflow.keras.optimizers import Adam
 
 # Create model
 input_shape = (64, 64, 3)
