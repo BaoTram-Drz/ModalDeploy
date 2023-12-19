@@ -1,6 +1,16 @@
 # main.py
+# from model import create_model
+# from tensorflow.keras.optimizers import Adam
+# import numpy as np
+
+import subprocess
+
+# Install TensorFlow
+subprocess.call(['pip', 'install', 'tensorflow==2.7.0'])
+
+# Now import the required modules
 from model import create_model
-from tensorflow.keras.optimizers import Adam
+import streamlit as st
 import numpy as np
 
 # Create model
