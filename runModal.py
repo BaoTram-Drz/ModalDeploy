@@ -1,9 +1,10 @@
 import streamlit as st
+
 try:
     import h5py
 except Exception as e:
-    print("Lỗi khi import mô-đun h5py:")
-    traceback.print_exc()
+    st.error(f"Lỗi khi import mô-đun h5py: {str(e)}")
+    st.exception(e)
 
 def read_hdf5_file(file_path):
     try:
