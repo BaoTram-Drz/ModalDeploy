@@ -14,8 +14,8 @@ import streamlit as st
 import numpy as np
 
 # Create model
-input_shape = (your_input_shape)
-num_classes = (your_num_classes)
+input_shape = (64, 64, 3)
+num_classes = 10
 model = create_model(input_shape, num_classes)
 
 # Compile the model (same as during training)
