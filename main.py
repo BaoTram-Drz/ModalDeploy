@@ -5,8 +5,6 @@
 
 import subprocess
 
-# Install TensorFlow
-subprocess.call(['pip', 'install', 'tensorflow==2.7.0'])
 
 # Now import the required modules
 from model import create_model
