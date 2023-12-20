@@ -27,8 +27,12 @@ script_directory = os.path.dirname(os.path.abspath(__file__))
 # Chỉ định đường dẫn đến file trọng số của mô hình so với thư mục của script
 weights_file_path = os.path.join(script_directory, "model.hdf5")  # Cập nhật tên file
 
-# Nạp trọng số đã được huấn luyện
-model.load_weights(weights_file_path)
+try:
+    model.load_weights(weights_file_path)
+except ValueError as e:
+    st.error(f"Lỗi: {str(e)}")
+except Exception as e:
+    st.error(f"Lỗi: Đã xảy ra một lỗi không mong muốn. {e}")
 
 # Use the model for predictions on new data
 new_data = np.random.rand(10, *input_shape)
