@@ -34,6 +34,10 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.preprocessing.text import tokenizer_from_json
 
+vocab_size = 10000
+embedding_dim = 100
+max_sequence_length = 200
+
 # Hàm tải model
 @st.cache(allow_output_mutation=True)
 def load_model():
