@@ -1,7 +1,10 @@
 # main.py
 import subprocess
 import os
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 from model import create_model
+
 import streamlit as st
 import numpy as np
 from tensorflow.keras.optimizers import Adam
