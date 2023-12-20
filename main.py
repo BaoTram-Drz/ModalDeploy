@@ -29,7 +29,6 @@
 #     st.error(f"Lỗi: Đã xảy ra một lỗi không mong muốn. {e}") 
 # new_data = np.random.rand(10, *input_shape)
 # predictions = model.predict(new_data)
-
 import streamlit as st
 import tensorflow as tf
 from tensorflow import keras
@@ -38,7 +37,14 @@ from tensorflow.keras.preprocessing.text import tokenizer_from_json
 # Hàm tải model
 @st.cache(allow_output_mutation=True)
 def load_model():
-    model = keras.models.load_model("model.hdf5")
+    model = keras.Sequential([
+        keras.layers.Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_sequence_length),
+        keras.layers.Conv1D(filters=128, kernel_size=5, activation='relu'),
+        keras.layers.GlobalMaxPooling1D(),
+        keras.layers.Dense(64, activation='relu'),
+        keras.layers.Dense(1, activation='sigmoid')
+    ])
+    model.load_weights("model.hdf5")
     with open('tokenizer.json') as f:
         data = tokenizer_from_json(f.read())
         tokenizer = data['tokenizer']
@@ -57,7 +63,7 @@ input_text = st.text_input("Nhập văn bản:", "")
 if st.button("Dự đoán"):
     # Tiền xử lý văn bản đầu vào
     input_sequence = tokenizer.texts_to_sequences([input_text])
-    input_sequence = keras.preprocessing.sequence.pad_sequences(input_sequence, maxlen=MAX_SEQUENCE_LENGTH)
+    input_sequence = keras.preprocessing.sequence.pad_sequences(input_sequence, maxlen=max_sequence_length)
 
     # Sử dụng model để dự đoán
     prediction = model.predict(input_sequence)
