@@ -36,11 +36,16 @@ import streamlit as st
 import tensorflow as tf
 from tensorflow import keras
 
-# Tải model từ file .hdf5
-model = keras.models.load_model('model.hdf5')
+# Hàm tải model
+@st.cache(allow_output_mutation=True)
+def load_model():
+    return keras.models.load_model("model.hdf5")
 
 # Giao diện người dùng
 st.title("Ứng dụng dự đoán")
+
+# Thực hiện tải model
+model = load_model()
 
 # Thêm các thành phần giao diện, ví dụ: ô nhập liệu
 input_text = st.text_input("Nhập văn bản:", "")
