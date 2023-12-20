@@ -18,6 +18,10 @@ input_shape = (64, 64, 3)
 num_classes = 10
 model = create_model(input_shape, num_classes)
 
+# In ra tên của các layer trong mô hình
+for layer in model.layers:
+    print(layer.name)
+
 # Compile the model (same as during training)
 model.compile(optimizer=Adam(), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
