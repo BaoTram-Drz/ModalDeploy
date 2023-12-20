@@ -30,30 +30,37 @@
 # new_data = np.random.rand(10, *input_shape)
 # predictions = model.predict(new_data)
 
-
-
 import streamlit as st
 import tensorflow as tf
 from tensorflow import keras
+from tensorflow.keras.preprocessing.text import tokenizer_from_json
 
 # Hàm tải model
 @st.cache(allow_output_mutation=True)
 def load_model():
-    return keras.models.load_model("model.hdf5")
+    model = keras.models.load_model("model.hdf5")
+    with open('tokenizer.json') as f:
+        data = tokenizer_from_json(f.read())
+        tokenizer = data['tokenizer']
+    return model, tokenizer
 
 # Giao diện người dùng
 st.title("Ứng dụng dự đoán")
 
-# Thực hiện tải model
-model = load_model()
+# Thực hiện tải model và tokenizer
+model, tokenizer = load_model()
 
 # Thêm các thành phần giao diện, ví dụ: ô nhập liệu
 input_text = st.text_input("Nhập văn bản:", "")
 
 # Kiểm tra khi người dùng nhấn nút "Dự đoán"
 if st.button("Dự đoán"):
+    # Tiền xử lý văn bản đầu vào
+    input_sequence = tokenizer.texts_to_sequences([input_text])
+    input_sequence = keras.preprocessing.sequence.pad_sequences(input_sequence, maxlen=MAX_SEQUENCE_LENGTH)
+
     # Sử dụng model để dự đoán
-    prediction = model.predict([input_text])
+    prediction = model.predict(input_sequence)
 
     # Hiển thị kết quả
     if prediction > 0.5:
