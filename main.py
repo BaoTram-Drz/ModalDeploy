@@ -6,7 +6,7 @@ from tensorflow.keras.preprocessing import image
 
 # Tải mô hình từ file HDF5
 model_path = 'model.hdf5'
-# model = load_model(model_path)
+model = load_model(model_path)
 
 # Hàm dự đoán hình ảnh
 def predict_image(img_array):
