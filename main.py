@@ -4,27 +4,28 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import load_model as load_model_hdf5
 
-# Tải mô hình từ file HDF5
-model = tf.keras.models.load_model('model.hdf5')
 
-# Tạo mô hình mới
-new_model = Sequential()
+model = load_model_hdf5('model.hdf5')
 
-# Lặp qua các layer của mô hình đã train
-for layer in model.layers:
-    # Kiểm tra nếu là lớp Dense
-    if isinstance(layer, Dense):
-        # Lấy thông tin của lớp Dense
-        units = layer.units
-        activation = layer.activation
-        input_shape = layer.input_shape
+# # Tạo mô hình mới
+# new_model = Sequential()
 
-        # Thêm lớp Dense mới vào mô hình mới
-        new_model.add(Dense(units=units, activation=activation, input_shape=input_shape))
-    else:
-        # Thêm các lớp khác vào mô hình mới
-        new_model.add(layer)
+# # Lặp qua các layer của mô hình đã train
+# for layer in model.layers:
+#     # Kiểm tra nếu là lớp Dense
+#     if isinstance(layer, Dense):
+#         # Lấy thông tin của lớp Dense
+#         units = layer.units
+#         activation = layer.activation
+#         input_shape = layer.input_shape
+
+#         # Thêm lớp Dense mới vào mô hình mới
+#         new_model.add(Dense(units=units, activation=activation, input_shape=input_shape))
+#     else:
+#         # Thêm các lớp khác vào mô hình mới
+#         new_model.add(layer)
 
 # Hàm dự đoán hình ảnh
 def predict_image(img_array):
