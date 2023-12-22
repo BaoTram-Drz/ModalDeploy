@@ -1,26 +1,28 @@
-# Python program to demonstrate
-# HDF5 file
-
-import numpy as np
+import streamlit as st
+import tensorflow as tf
 import h5py
+import numpy as np
 
-# initializing a random numpy array
-arr = np.random.randn(1000)
+# train
+train_filename = 'model.hdf5'
+datasets = []
+with h5py.File(train_filename, "r") as f:
+    for file_key in f.keys():
+        group = f[file_key]
+        if isinstance(group, h5py._hl.dataset.Dataset):
+            datasets.append(np.array(group))
+            continue
+        for group_key in group.keys():
+            group2 = group[group_key]
+            if isinstance(group2, h5py._hl.dataset.Dataset):
+                datasets.append(np.array(group2))
+                continue
+            for group_key2 in group2.keys():
+                group3 = group2[group_key2]
+                if isinstance(group3, h5py._hl.dataset.Dataset):
+                    datasets.append(np.array(group3))
+                    continue
 
-# creating a file
-# with h5py.File('model.hdf5', 'w') as f: 
-# 	dset = f.create_dataset("default", data = arr)
-	
-# open the file as 'f'
-with h5py.File('model.hdf5', 'r') as f: 
-	data = f['default']
-	
-	# get the minimum value
-	print(min(data)) 
-	
-	# get the maximum value
-	print(max(data))
-	
-	# get the values ranging from index 0 to 15
-	print(data[:16])
-	
+print(len(datasets))
+for dataset in datasets:
+    print(dataset)
