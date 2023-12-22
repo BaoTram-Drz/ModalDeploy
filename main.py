@@ -1,12 +1,12 @@
 import streamlit as st
-import h5py
 import numpy as np
-from tensorflow.keras.models import load_model
+import tensorflow as tf
 from tensorflow.keras.preprocessing import image
+from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
 # Tải mô hình từ file HDF5
-model = load_model('model.hdf5') 
+model = tf.keras.models.load_model('model.hdf5')
 
 # Tạo mô hình mới
 new_model = Sequential()
@@ -26,9 +26,6 @@ for layer in model.layers:
         # Thêm các lớp khác vào mô hình mới
         new_model.add(layer)
 
-
-model = load_model(model_path)
-
 # Hàm dự đoán hình ảnh
 def predict_image(img_array):
     # Chuẩn hóa hình ảnh
@@ -36,7 +33,7 @@ def predict_image(img_array):
     img_array = np.expand_dims(img_array, axis=0)
 
     # Dự đoán
-    predictions = new_model.predict(img_array)
+    predictions = model.predict(img_array)
 
     return predictions
 
