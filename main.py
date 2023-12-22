@@ -3,9 +3,30 @@ import h5py
 import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
+from tensorflow.keras.layers import Dense
 
 # Tải mô hình từ file HDF5
-model_path = 'model.hdf5'
+model = load_model('model.hdf5') 
+
+# Tạo mô hình mới
+new_model = Sequential()
+
+# Lặp qua các layer của mô hình đã train
+for layer in model.layers:
+    # Kiểm tra nếu là lớp Dense
+    if isinstance(layer, Dense):
+        # Lấy thông tin của lớp Dense
+        units = layer.units
+        activation = layer.activation
+        input_shape = layer.input_shape
+
+        # Thêm lớp Dense mới vào mô hình mới
+        new_model.add(Dense(units=units, activation=activation, input_shape=input_shape))
+    else:
+        # Thêm các lớp khác vào mô hình mới
+        new_model.add(layer)
+
+
 model = load_model(model_path)
 
 # Hàm dự đoán hình ảnh
@@ -15,7 +36,7 @@ def predict_image(img_array):
     img_array = np.expand_dims(img_array, axis=0)
 
     # Dự đoán
-    predictions = model.predict(img_array)
+    predictions = new_model.predict(img_array)
 
     return predictions
 
