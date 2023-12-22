@@ -1,28 +1,43 @@
 import streamlit as st
-import tensorflow as tf
 import h5py
 import numpy as np
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
 
-# train
-train_filename = 'model.hdf5'
-datasets = []
-with h5py.File(train_filename, "r") as f:
-    for file_key in f.keys():
-        group = f[file_key]
-        if isinstance(group, h5py._hl.dataset.Dataset):
-            datasets.append(np.array(group))
-            continue
-        for group_key in group.keys():
-            group2 = group[group_key]
-            if isinstance(group2, h5py._hl.dataset.Dataset):
-                datasets.append(np.array(group2))
-                continue
-            for group_key2 in group2.keys():
-                group3 = group2[group_key2]
-                if isinstance(group3, h5py._hl.dataset.Dataset):
-                    datasets.append(np.array(group3))
-                    continue
+# Tải mô hình từ file HDF5
+model_path = 'model.hdf5'
+# model = load_model(model_path)
 
-print(len(datasets))
-for dataset in datasets:
-    print(dataset)
+# Hàm dự đoán hình ảnh
+# def predict_image(img_array):
+#     # Chuẩn hóa hình ảnh
+#     img_array = img_array / 255.0
+#     img_array = np.expand_dims(img_array, axis=0)
+
+#     # Dự đoán
+#     predictions = model.predict(img_array)
+
+#     return predictions
+
+# Giao diện Streamlit
+def main():
+    st.title("Ứng dụng Dự đoán Hình ảnh")
+
+    # Tải lên hình ảnh từ máy tính
+    uploaded_file = st.file_uploader("Tải lên hình ảnh", type=["jpg", "jpeg", "png"])
+
+    # if uploaded_file is not None:
+    #     # Đọc hình ảnh từ file
+    #     img = image.load_img(uploaded_file, target_size=(64, 64))
+    #     img_array = image.img_to_array(img)
+
+    #     # Hiển thị hình ảnh
+    #     st.image(img, caption='Hình ảnh tải lên', use_column_width=True)
+
+    #     # Dự đoán
+    #     if st.button("Dự đoán"):
+    #         predictions = predict_image(img_array)
+    #         st.write("Kết quả dự đoán:", predictions)
+
+if __name__ == "__main__":
+    main()
