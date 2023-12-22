@@ -3,13 +3,16 @@ import numpy as np
 import streamlit as st
 from tensorflow.keras.preprocessing import image
 from PIL import Image
+from tensorflow import keras
+
 # Tải mô hình từ tệp HDF5
 def load_model_from_hdf5(file_path):
-    model = None
-    with h5py.File(file_path, "r") as file:
-        model = file.get("default")  # Thay "model_name" bằng tên thực sự của dataset
-        model = model[()] if model is not None else None
-    return model
+    try:
+        model = keras.models.load_model(file_path)
+        return model
+    except Exception as e:
+        st.write(f"Error loading the model: {str(e)}")
+        return None
 
 # Hàm dự đoán hình ảnh
 def predict_image(model, img_array):
