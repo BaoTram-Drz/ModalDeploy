@@ -1,19 +1,23 @@
-
-import streamlit as st
 import h5py
-from tensorflow.keras.models import load_model
+filename = "file.hdf5"
 
-# Đường dẫn tới tệp model.hdf5
-model_path = "model.hdf5"
+with h5py.File(filename, "r") as f:
+    # Print all root level object names (aka keys) 
+    # these can be group or dataset names 
+    print("Keys: %s" % f.keys())
+    # get first object name/key; may or may NOT be a group
+    a_group_key = list(f.keys())[0]
 
-# Hàm để mở tệp và trả về đối tượng model
-def load_model():
-    model = load_model(model_path)  # Sử dụng hàm load_model của Keras để tải mô hình
-    return model
+    # get the object type for a_group_key: usually group or dataset
+    print(type(f[a_group_key])) 
 
-# Load model
-model = load_model()
+    # If a_group_key is a group name, 
+    # this gets the object names in the group and returns as a list
+    data = list(f[a_group_key])
 
-# Giao diện người dùng
-st.title("Ứng dụng Streamlit với model.hdf5")
-# TODO: Thêm các thành phần giao diện khác và sử dụng model
+    # If a_group_key is a dataset name, 
+    # this gets the dataset values and returns as a list
+    data = list(f[a_group_key])
+    # preferred methods to get dataset values:
+    ds_obj = f[a_group_key]      # returns as a h5py dataset object
+    ds_arr = f[a_group_key][()]
