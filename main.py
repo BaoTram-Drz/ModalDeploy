@@ -1,13 +1,13 @@
-import streamlit as st
-import numpy as np
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
-from tensorflow.keras.models import load_model as load_model_hdf5
+from tensorflow.keras.models import load_model 
 
+model = load_model('model.hdf5')
 
-model = load_model_hdf5('model.hdf5')
+import streamlit as st
+import numpy as np
 
 # # Tạo mô hình mới
 # new_model = Sequential()
