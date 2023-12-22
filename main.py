@@ -1,19 +1,15 @@
+
 import streamlit as st
 import h5py
+from tensorflow.keras.models import load_model
 
 # Đường dẫn tới tệp model.hdf5
 model_path = "model.hdf5"
 
 # Hàm để mở tệp và trả về đối tượng model
 def load_model():
-    with h5py.File(model_path, "r") as f:
-        # Truy cập các nhóm và datasets trong tệp HDF5
-        # Ví dụ: `group = f['tên_nhóm']`, `dataset = group['tên_dataset']`
-
-        # TODO: Thực hiện các thao tác khác trên model (nếu cần)
-
-        # Trả về đối tượng model
-        return model
+    model = load_model(model_path)  # Sử dụng hàm load_model của Keras để tải mô hình
+    return model
 
 # Load model
 model = load_model()
