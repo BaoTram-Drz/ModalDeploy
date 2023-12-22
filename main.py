@@ -2,7 +2,7 @@ import h5py
 import numpy as np
 import streamlit as st
 from tensorflow.keras.preprocessing import image
-
+from PIL import Image
 # Tải mô hình từ tệp HDF5
 def load_model_from_hdf5(file_path):
     model = None
@@ -38,7 +38,8 @@ def main():
 
     if uploaded_file is not None:
         # Đọc hình ảnh từ tệp
-        img = image.load_img(uploaded_file, target_size=(64, 64))
+        img = Image.open(uploaded_file)
+        img = img.resize((64, 64))  # Resize the image to match the target size
         img_array = image.img_to_array(img)
 
         # Hiển thị hình ảnh
