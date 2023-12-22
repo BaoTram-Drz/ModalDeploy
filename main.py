@@ -1,27 +1,23 @@
 import streamlit as st
-import tensorflow as tf
+import h5py
 
+# Đường dẫn tới tệp model.hdf5
+model_path = "model.hdf5"
+
+# Hàm để mở tệp và trả về đối tượng model
 def load_model():
-    # Load the model from the .hdf5 file
-    model = tf.keras.models.load_model('model.hdf5')
-    return model
+    with h5py.File(model_path, "r") as f:
+        # Truy cập các nhóm và datasets trong tệp HDF5
+        # Ví dụ: `group = f['tên_nhóm']`, `dataset = group['tên_dataset']`
 
-def main():
-    # Load the model
-    model = load_model()
+        # TODO: Thực hiện các thao tác khác trên model (nếu cần)
 
-    # Create a file uploader
-    uploaded_file = st.file_uploader("Upload an image", type=['png', 'jpg'])
+        # Trả về đối tượng model
+        return model
 
-    if uploaded_file is not None:
-        # Preprocess the image
-        image = preprocess_image(uploaded_file)
+# Load model
+model = load_model()
 
-        # Make predictions
-        predictions = model.predict(image)
-
-        # Display the predictions
-        st.write(predictions)
-
-if __name__ == '__main__':
-    main()
+# Giao diện người dùng
+st.title("Ứng dụng Streamlit với model.hdf5")
+# TODO: Thêm các thành phần giao diện khác và sử dụng model
