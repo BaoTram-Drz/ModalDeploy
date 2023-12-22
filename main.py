@@ -41,7 +41,7 @@ def main():
     if uploaded_file is not None:
         # Đọc hình ảnh từ tệp
         img = Image.open(uploaded_file)
-        img = img.resize((64, 64))  # Resize the image to match the target size
+        img = img.resize((256, 256))  # Resize the image to match the target size
         img_array = image.img_to_array(img)
 
         # Hiển thị hình ảnh
