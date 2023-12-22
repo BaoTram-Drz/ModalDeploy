@@ -1,34 +1,18 @@
-
-import streamlit as st
+import h5py
 import numpy as np
-import tensorflow as tf
+import streamlit as st
 from tensorflow.keras.preprocessing import image
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.models import load_model 
 
-model = load_model('model.hdf5')
-
-# # Tạo mô hình mới
-# new_model = Sequential()
-
-# # Lặp qua các layer của mô hình đã train
-# for layer in model.layers:
-#     # Kiểm tra nếu là lớp Dense
-#     if isinstance(layer, Dense):
-#         # Lấy thông tin của lớp Dense
-#         units = layer.units
-#         activation = layer.activation
-#         input_shape = layer.input_shape
-
-#         # Thêm lớp Dense mới vào mô hình mới
-#         new_model.add(Dense(units=units, activation=activation, input_shape=input_shape))
-#     else:
-#         # Thêm các lớp khác vào mô hình mới
-#         new_model.add(layer)
+# Tải mô hình từ tệp HDF5
+def load_model_from_hdf5(file_path):
+    model = None
+    with h5py.File(file_path, "r") as file:
+        model = file.get("default")  # Thay "model_name" bằng tên thực sự của dataset
+        model = model[()] if model is not None else None
+    return model
 
 # Hàm dự đoán hình ảnh
-def predict_image(img_array):
+def predict_image(model, img_array):
     # Chuẩn hóa hình ảnh
     img_array = img_array / 255.0
     img_array = np.expand_dims(img_array, axis=0)
@@ -42,11 +26,18 @@ def predict_image(img_array):
 def main():
     st.title("Ứng dụng Dự đoán bệnh của lúa nước")
 
+    # Tải mô hình
+    model = load_model_from_hdf5('model.hdf5')  # Thay 'model.hdf5' bằng đường dẫn thực tế đến tệp HDF5 của bạn
+
+    if model is None:
+        st.write("Không thể tải mô hình.")
+        return
+
     # Tải lên hình ảnh từ máy tính
     uploaded_file = st.file_uploader("Tải lên hình ảnh", type=["jpg", "jpeg", "png"])
 
     if uploaded_file is not None:
-        # Đọc hình ảnh từ file
+        # Đọc hình ảnh từ tệp
         img = image.load_img(uploaded_file, target_size=(64, 64))
         img_array = image.img_to_array(img)
 
@@ -55,7 +46,7 @@ def main():
 
         # Dự đoán
         if st.button("Dự đoán"):
-            predictions = predict_image(img_array)
+            predictions = predict_image(model, img_array)
             st.write("Kết quả dự đoán:", predictions)
 
 if __name__ == "__main__":
