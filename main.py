@@ -9,7 +9,7 @@ from tensorflow import keras
 def load_model_from_hdf5(file_path):
     model = None
     with h5py.File(file_path, "r") as file:
-        model = file.get("default")  # Thay "model_name" bằng tên thực sự của dataset
+        model = file.get("optimizer_weights")  # Thay "model_name" bằng tên thực sự của dataset
         model = model[()] if model is not None else None
     return model
 
