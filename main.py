@@ -2,11 +2,15 @@ import h5py
 import numpy as np
 import streamlit as st
 from tensorflow.keras.preprocessing import image
+from tensorflow.keras.models import Sequential
 from PIL import Image
 from tensorflow import keras
 
+# Create a new instance of the model
+
 # Tải mô hình từ tệp HDF5
 def load_model_from_hdf5(file_path):
+    model = None
     model = None
     with h5py.File(file_path, "r") as file:
         model = file.get("default")  # Thay "model_name" bằng tên thực sự của dataset
@@ -29,7 +33,11 @@ def main():
     st.title("Ứng dụng Dự đoán bệnh của lúa nước")
 
     # Tải mô hình
-    model = load_model_from_hdf5('model.hdf5')  # Thay 'model.hdf5' bằng đường dẫn thực tế đến tệp HDF5 của bạn
+    model = Sequential()
+
+    model.load_weights('weights.h5') 
+
+    # model = load_model_from_hdf5('model.hdf5')  # Thay 'model.hdf5' bằng đường dẫn thực tế đến tệp HDF5 của bạn
 
     if model is None:
         st.write("Không thể tải mô hình.")
