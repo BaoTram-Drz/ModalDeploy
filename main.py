@@ -33,7 +33,7 @@ def main():
     # Tải mô hình
     model = Sequential()
 
-    model = keras.models.load_model('model.h5')
+    model = keras.models.load_model('model.hdf5')
 
 
     # model = load_model_from_hdf5('model.hdf5')  # Thay 'model.hdf5' bằng đường dẫn thực tế đến tệp HDF5 của bạn
