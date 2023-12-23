@@ -20,7 +20,7 @@ def predict_image(model, img_array):
     img_array = np.expand_dims(img_array, axis=0)
 
     # Dự đoán
-    predictions = model.dir(img_array)
+    predictions = model.class(img_array)
 
     return predictions
 
