@@ -53,6 +53,17 @@ def main():
         if st.button("Dự đoán"):
             predictions = predict_image(loaded_model, img_array)
             st.write("Kết quả dự đoán:", predictions)
+        
+        st.write("0: Bệnh lụi lá")
+        st.write("1: Bệnh cháy lá")
+        st.write("2: Bệnh lép hạt")
+        st.write("3: Bệnh đạo ôn")
+        st.write("4: Bệnh đốm nâu")
+        st.write("5: Bệnh thối cổ bông")
+        st.write("6: Bệnh phấn trắng")
+        st.write("7: Bệnh bọ gai")
+        st.write("8: Bệnh bình thương")
+        st.write("9: Bệnh tungro")
 
 if __name__ == "__main__":
     main()
