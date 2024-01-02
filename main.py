@@ -29,7 +29,7 @@ def predict_image(model, img_array):
 
 # Giao diện Streamlit
 def main():
-    st.title("Ứng dụng Dự đoán bệnh của lúa nước")
+    st.title("Ứng dụng: Dự đoán bệnh của lúa nước!")
     # Tải mô hình
     loaded_model = load_keras_model(model_path)
 
@@ -61,7 +61,7 @@ def main():
             st.write("5: Bệnh thối cổ bông")
             st.write("6: Bệnh phấn trắng")
             st.write("7: Bệnh bọ gai")
-            st.write("8: Bệnh bình thương")
+            st.write("8: Bình thường")
             st.write("9: Bệnh tungro")
 
         
