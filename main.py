@@ -62,7 +62,7 @@ def main():
             st.write("6: Bệnh bạc lá")
             st.write("7: Bọ xít")
             st.write("8: Bình thường")
-            st.write("9: Bệnh tungro")
+            st.write("9: Bệnh tungro/ vàng lùn lùn xoắn lá")
 
         
         
